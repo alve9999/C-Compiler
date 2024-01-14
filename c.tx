@@ -1,0 +1,20 @@
+
+program: content*=Statement;
+
+Statement: IfStatement | WhileStatement | SwitchStatement | ReturnStatement | BreakStatement | BlankStatement |StorageClauseDeclarationStatment | DeclarationStatment | AssignmentStatment;
+
+IfStatement: 'if' '(' condition=Expression ')' '{' statements*=Statement '}' elseifs*=ElseIfStatement Else=ElseStatement?;
+ElseIfStatement: 'else if' '(' condition=Expression ')' '{' statements*=Statement '}';
+ElseStatement: 'else' '{' statements*=Statement '}';
+WhileStatement: 'while' '(' condition=Expression ')' '{' statements*=Statement '}';
+SwitchStatement: 'switch' '(' condition=Expression ')' '{' cases*=CaseStatement default_case=DefaultStatement? '}';
+CaseStatement: 'case' expression=Expression ':' statements*=Statement;
+DefaultStatement: 'default' ':' statements*=Statement;
+BreakStatement: 'break' ';';
+ReturnStatement: 'return' return_value=Expression? ';';
+BlankStatement: ';';
+StorageClauseDeclarationStatment: StorageClause=ID Type=ID Name=ID ('=' Val=Expression)? ';';
+DeclarationStatment: Type=ID Name=ID ('=' Val=Expression)? ';';
+AssignmentStatment: Name=ID '=' Val=Expression;
+
+Expression: ID;
