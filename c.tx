@@ -1,7 +1,6 @@
-
 program: content*=Statement;
 
-Statement: IfStatement | WhileStatement | SwitchStatement | ReturnStatement | BreakStatement | BlankStatement |StorageClauseDeclarationStatment | DeclarationStatment | AssignmentStatment;
+Statement: IfStatement | WhileStatement | SwitchStatement | ReturnStatement | BreakStatement | BlankStatement | AssignmentStatment | DeclarationStatment;
 
 IfStatement: 'if' '(' condition=Expression ')' '{' statements*=Statement '}' elseifs*=ElseIfStatement Else=ElseStatement?;
 ElseIfStatement: 'else if' '(' condition=Expression ')' '{' statements*=Statement '}';
@@ -14,7 +13,12 @@ BreakStatement: 'break' ';';
 ReturnStatement: 'return' return_value=Expression? ';';
 BlankStatement: ';';
 StorageClauseDeclarationStatment: StorageClause=ID Type=ID Name=ID ('=' Val=Expression)? ';';
-DeclarationStatment: Type=ID Name=ID ('=' Val=Expression)? ';';
 AssignmentStatment: Name=ID '=' Val=Expression;
+DeclarationStatment: Info*=ID ('=' Val=Expression)? ';';
+
+
+
 
 Expression: ID;
+
+CommaExpression: Argument=AssignmentExpression (',' Argument=AssignmentExpression)*

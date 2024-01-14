@@ -14,7 +14,7 @@ ast,model = parse_c_code()
 
 print(ast)
 
-model_export(ast, 'entity.dot')
+model_export(ast, "entity.dot")
 metamodel_export(model, "model.dot")
 
 path = 'entity.dot'
