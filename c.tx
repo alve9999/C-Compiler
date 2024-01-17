@@ -1,6 +1,6 @@
-program: content*=Statement;
+Program: content*=Statement;
 
-Statement: IfStatement | WhileStatement | SwitchStatement | ReturnStatement | BreakStatement | BlankStatement | AssignmentStatment | DeclarationStatment;
+Statement: IfStatement | WhileStatement | SwitchStatement | ReturnStatement | BreakStatement | BlankStatement | AssignmentStatment | DeclarationStatment | ExpressionStatment;
 
 IfStatement: 'if' '(' condition=Expression ')' '{' statements*=Statement '}' elseifs*=ElseIfStatement Else=ElseStatement?;
 ElseIfStatement: 'else if' '(' condition=Expression ')' '{' statements*=Statement '}';
@@ -15,10 +15,11 @@ BlankStatement: ';';
 StorageClauseDeclarationStatment: StorageClause=ID Type=ID Name=ID ('=' Val=Expression)? ';';
 AssignmentStatment: Name=ID '=' Val=Expression;
 DeclarationStatment: Info*=ID ('=' Val=Expression)? ';';
+ExpressionStatment: Expression ';';
 
+Expression: AdditiveExpression;
+AdditiveExpression: Left=MultiplicativeExpression (op='+' | op='-') Right=AdditiveExpression | Left=MultiplicativeExpression;
+MultiplicativeExpression: Left=UnaryExpression (op='*' | op='/' | op='%') Right=MultiplicativeExpression | Left=UnaryExpression;
+UnaryExpression: (op='--' | op='++' | op='!' | op='~' | op='+' | op='-' | '(' type=ID ')' | op='*' | op='&' | op='&' | op='sizeof') Content=UnaryExpression | Cont=PrimaryExpression;
+PrimaryExpression: Content=INT | Content=ID | '(' Cont=Expression ')'  | '[' Bracket=Expression ']'| Left=Expression (op='.'|op='->') Right=ID | Content=Expression (op='++' | op='--');
 
-
-
-Expression: ID;
-
-CommaExpression: Argument=AssignmentExpression (',' Argument=AssignmentExpression)*
